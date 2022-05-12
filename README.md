@@ -1,10 +1,9 @@
-# webmorphR_dlibs
+# webmorphR.dlibs
 
-Install this dlib for the 70-point template in [webmorphR](https://debruine.github.io/webmorphR/)
+This package provides dlib files for use with the package [webmorphR](https://debruine.github.io/webmorphR/). These files are used for different auto-delineations with the python module [face_recognition](https://github.com/ageitgey/face_recognition). `dlib70` is the 68-point template from [dlib](https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/) (plus two points for the eye centres).
+
+Install the package with:
 
 ``` r
-dlib70 <- tempfile()
-download.file("https://github.com/debruine/webmorphR_dlibs/raw/main/dlib70.dat", dlib70)
-python_dir <- system.file("python", package = "webmorphR")
-file.copy(from = dlib70, to = paste0(python_dir, "/dlib70.dat"))
+remotes::install_github("debruine/webmorphR.dlibs")
 ```
