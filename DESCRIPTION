@@ -20,6 +20,12 @@ Depends:
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "face_recognition")
+    )
+  )
 Imports: 
     progress,
     reticulate,
