@@ -60,7 +60,7 @@ dlib_auto_delin <- function(stimuli,
 
   # load script
   py_get_points <- NULL # stops CMD check from complaining
-  pyscript <- system.file("python/facedetect.py", package = "webmorphR")
+  pyscript <- system.file("python/facedetect.py", package = "webmorphR.dlib")
   reticulate::source_python(pyscript)
 
   # save images to temp file ----

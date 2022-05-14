@@ -45,7 +45,7 @@ tem_to_xml <- function(stimuli, dir = "images", imageset = "Image Set") {
   }
 
   py_get_location <- NULL # stops CMD check from complaining
-  pyscript <- system.file("python/facedetect.py", package = "webmorphR")
+  pyscript <- system.file("python/facedetect.py", package = "webmorphR.dlib")
   reticulate::source_python(pyscript)
   boxes <- lapply(paths, function(p) {
     if (verbose) pb$tick()
