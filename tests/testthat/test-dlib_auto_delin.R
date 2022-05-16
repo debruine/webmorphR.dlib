@@ -17,15 +17,15 @@ test_that("python", {
   expect_equal(s7[[1]]$points |> dim(), c(2, 7))
 
   custom <- system.file("python/shape_predictor_5_face_landmarks.dat", package = "webmorphR.dlib")
-  s5 <- dlib_auto_delin(stimuli, replace = TRUE, dlib_path = custom)
-  expect_equal(s7[[1]]$points[, 3:7], s5[[1]]$points,
-               ignore_attr = TRUE)
+  s5 <- dlib_auto_delin(stimuli, replace = TRUE, model_path = custom)
+  expect_equivalent(s7[[1]]$points[, 3:7],
+                    s5[[1]]$points)
 
   s70 <- dlib_auto_delin(stimuli, "dlib70", TRUE)
   expect_equal(s70[[1]]$points |> dim(), c(2, 70))
 
-  # webmorphR::draw_tem(s7)
-  # webmorphR::draw_tem(s5)
-  # webmorphR::draw_tem(s70)
+  # draw_tem(s7)
+  # draw_tem(s5)
+  # draw_tem(s70)
 })
 

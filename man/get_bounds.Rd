@@ -20,9 +20,15 @@ A stimlist with a 4-point template of the top-left, top-right, bottom-right, and
 Get the bounds detected by \code{\link[=tem_to_xml]{tem_to_xml()}} (uses dlib.get_frontal_face_detector()).
 }
 \examples{
-dir <- tempfile()
-stimuli <- demo_stim()
-xml <- tem_to_xml(stimuli, dir)
+xml <- system.file("demo/_images.xml", package = "webmorphR.dlib")
 bounds <- get_bounds(xml)
 cropped <- get_bounds(xml, crop = TRUE)
+
+\dontrun{
+  # plot images
+  bounds |>
+    draw_tem(line.alpha = 1, line.color = "green") |>
+    c(cropped) |>
+    plot(nrow = 1)
+}
 }

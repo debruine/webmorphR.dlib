@@ -3,3 +3,7 @@
 ^LICENSE\.md$
 stuff
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^codecov\.yml$

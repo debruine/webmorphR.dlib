@@ -3,7 +3,7 @@ test_that("facetrain", {
 
   stimuli <- demo_stim("composite") |>
     webmorphR::subset_tem(webmorphR::features("face"))
-  #stimuli[1] |> webmorphR::draw_tem()
+  #stimuli[1] |> draw_tem()
 
   ## too-small
   dir <- tempfile()
@@ -27,10 +27,10 @@ test_that("facetrain", {
   newmodel <- facetrain(xml, output)
 
   teststim <- demo_stim("lisa") |>
-    dlib_auto_delin(replace = TRUE, dlib_path = newmodel)
+    dlib_auto_delin(replace = TRUE, model_path = newmodel)
 
   expect_equal(teststim[[1]]$points |> dim(),
                stimuli[[1]]$points |> dim())
 
-  # teststim[1] |> webmorphR::draw_tem(pt.shape = "index", pt.size = 15)
+  # teststim[1] |> draw_tem(pt.shape = "index", pt.size = 15)
 })

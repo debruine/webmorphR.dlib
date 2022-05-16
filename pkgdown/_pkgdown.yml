@@ -1,0 +1,37 @@
+url: https://debruine.github.io/webmorphR.dlib/
+
+home:
+  title: Face Detection for webmorphR
+  description: Provides dlib functions for automatically delineating face images with the package webmorphR.
+
+development:
+  mode: unreleased
+
+template:
+  bootstrap: 5
+  bootswatch: yeti
+  bslib:
+    primary: "#204969"
+    base_font: {google: "Roboto Flex"}
+    heading_font: {google: "Roboto"}
+  opengraph:
+    image:
+      src: man/figures/card.png
+      alt: "Blue hexagon with a simplified white wireframe face"
+    twitter:
+      creator: "@lisadebruine"
+      site: "@webmorph_org"
+      card: summary_large_image
+
+navbar:
+  structure:
+    right: [twitter, github]
+  components:
+    twitter:
+      icon: "fa-twitter"
+      href: https://twitter.com/webmorph_org
+      aria-label: Twitter
+    github:
+      icon: "fa-github"
+      href: https://github.com/debruine/webmorphR.dlib
+      aria-label: GitHub

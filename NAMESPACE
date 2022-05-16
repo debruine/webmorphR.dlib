@@ -2,8 +2,10 @@
 
 export(demo_stim)
 export(dlib_auto_delin)
+export(draw_tem)
 export(facetrain)
 export(get_bounds)
 export(tem_to_xml)
 export(xml_to_tem)
 importFrom(webmorphR,demo_stim)
+importFrom(webmorphR,draw_tem)

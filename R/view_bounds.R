@@ -10,11 +10,17 @@
 #' @export
 #'
 #' @examples
-#' dir <- tempfile()
-#' stimuli <- demo_stim()
-#' xml <- tem_to_xml(stimuli, dir)
+#' xml <- system.file("demo/_images.xml", package = "webmorphR.dlib")
 #' bounds <- get_bounds(xml)
 #' cropped <- get_bounds(xml, crop = TRUE)
+#'
+#' \dontrun{
+#'   # plot images
+#'   bounds |>
+#'     draw_tem(line.alpha = 1, line.color = "green") |>
+#'     c(cropped) |>
+#'     plot(nrow = 1)
+#' }
 get_bounds <- function(xml, crop = FALSE, subset = NULL) {
   images <- XML::xmlParse(xml) |>
     XML::xmlToList() |>

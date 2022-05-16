@@ -8,7 +8,7 @@ dlib_auto_delin(
   stimuli,
   model = c("dlib7", "dlib70"),
   replace = FALSE,
-  dlib_path = NULL
+  model_path = NULL
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ dlib_auto_delin(
 
 \item{replace}{if FALSE, only gets templates for images with no template}
 
-\item{dlib_path}{path to a custom dlib .dat landmark file to use (model is ignored if set)}
+\item{model_path}{path to a custom dlib .dat landmark file to use (model is ignored if set)}
 }
 \value{
 stimlist with templates
@@ -29,9 +29,13 @@ Automatically delineate faces using dlib shape predictor models.
 \examples{
 \dontrun{
   auto_dlib7 <- demo_stim() |>
-    auto_delin(replace = TRUE) # replace existing templates
+    dlib_auto_delin(replace = TRUE) # replace existing templates
 
   auto_dlib70 <- demo_stim() |>
-    auto_delin(model = "dlib70", replace = TRUE)
+    dlib_auto_delin(model = "dlib70", replace = TRUE)
+
+  c(auto_dlib7, auto_dlib70) |>
+    draw_tem() |>
+    plot(nrow = 1)
 }
 }

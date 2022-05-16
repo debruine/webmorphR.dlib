@@ -63,17 +63,16 @@ This text is from Adrian Rosebrock's explanation:
 }
 \examples{
 \dontrun{
-# requires python and dlib
-stimuli <- demo_stim("composite") |>
-  subset_tem(features("face"))
+  # requires python and dlib
+  xml <- system.file("demo/_images.xml", package = "webmorphR.dlib")
 
-# create xml and image directory for training
-xml <- tem_to_xml(stimuli)
+  # train model
+  newmodel <- facetrain(xml)
 
-# train model
-newmodel <- facetrain(xml)
+  # check model on new images
+  newdelin <- demo_stim("zoom") |>
+    auto_delin(replace = TRUE, dat_file = newmodel)
 
-# check model on new images
-newdelin <- stimuli |> auto_delin(replace = TRUE, dat_file = newmodel)
+  newdelin |> draw_tem() |> plot(nrow = 6)
 }
 }

@@ -4,5 +4,5 @@
 \alias{demo_stim}
 \title{Demo stimuli}
 \description{
-Demo stimuli
+Function exported from \code{\link[webmorphR:demo_stim]{webmorphR::demo_stim()}} for easier testing.
 }

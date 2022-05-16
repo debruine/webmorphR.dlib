@@ -9,5 +9,5 @@ test_that("xml_to_tem", {
   point_diff <- abs(s[[1]]$points - tems[[1]]$points)
   expect_true( all(point_diff <= 0.5) )
 
-  #webmorphR::draw_tem(tems) |> plot()
+  # draw_tem(tems) |> plot()
 })

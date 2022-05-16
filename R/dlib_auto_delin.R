@@ -5,7 +5,7 @@
 #' @param stimuli list of class stimlist
 #' @param model Which of the built-in models (dlib7, dlib70)
 #' @param replace if FALSE, only gets templates for images with no template
-#' @param dlib_path path to a custom dlib .dat landmark file to use (model is ignored if set)
+#' @param model_path path to a custom dlib .dat landmark file to use (model is ignored if set)
 #'
 #' @return stimlist with templates
 #' @export
@@ -13,15 +13,19 @@
 #' @examples
 #' \dontrun{
 #'   auto_dlib7 <- demo_stim() |>
-#'     auto_delin(replace = TRUE) # replace existing templates
+#'     dlib_auto_delin(replace = TRUE) # replace existing templates
 #'
 #'   auto_dlib70 <- demo_stim() |>
-#'     auto_delin(model = "dlib70", replace = TRUE)
+#'     dlib_auto_delin(model = "dlib70", replace = TRUE)
+#'
+#'   c(auto_dlib7, auto_dlib70) |>
+#'     draw_tem() |>
+#'     plot(nrow = 1)
 #' }
 dlib_auto_delin <- function(stimuli,
                             model = c("dlib7", "dlib70"),
                             replace = FALSE,
-                            dlib_path = NULL) {
+                            model_path = NULL) {
   stimuli <- webmorphR::validate_stimlist(stimuli)
   model <- match.arg(model)
   verbose <- getOption("webmorph.verbose", TRUE)
@@ -42,8 +46,8 @@ dlib_auto_delin <- function(stimuli,
     stop("You need to install Python to use the dlib templates")
   }
 
-  if (!is.null(dlib_path)) {
-    pred_file <- normalizePath(dlib_path)
+  if (!is.null(model_path)) {
+    pred_file <- normalizePath(model_path)
   } else {
     # get pred_file location
     filename <- list(
@@ -96,7 +100,7 @@ dlib_auto_delin <- function(stimuli,
   }
 
   # add eye points and lines if a built-in model ----
-  if (is.null(dlib_path)) {
+  if (is.null(model_path)) {
     tem_def <- webmorphR::tem_def(model)
 
     for (i in seq_along(stimuli)) {

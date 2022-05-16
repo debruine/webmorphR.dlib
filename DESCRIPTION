@@ -9,7 +9,7 @@ Authors@R:
         email = "debruine@gmail.com", 
         comment = c(ORCID = "0000-0002-7523-5539")
     )
-Description: Provides dlib files for automatically delineating face images with the package webmorphR.
+Description: Provides dlib functions for automatically delineating face images with the package webmorphR.
 License: CC BY 4.0
 Encoding: UTF-8
 LazyData: true
@@ -18,12 +18,14 @@ RoxygenNote: 7.2.0
 Depends: 
     R (>= 4.2.0)
 Suggests: 
+    covr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 Imports: 
     progress,
     reticulate,
+    XML,
     webmorphR (>= 0.0.2)
 Remotes: 
     debruine/webmorphR

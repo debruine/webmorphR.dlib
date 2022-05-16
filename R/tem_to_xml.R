@@ -10,16 +10,10 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
-#' # requires python and dlib
-#' stimuli <- demo_stim("composite")
-#'
-#' # create xml and image directory for training
-#' xml <- tem_to_xml(stimuli)
+#' xml <- system.file("demo/_images.xml", package = "webmorphR.dlib")
 #'
 #' # read the first 10 lines of the xml file
 #' readLines(xml, n = 10)
-#' }
 tem_to_xml <- function(stimuli, dir = "images", imageset = "Image Set") {
   stimuli <- webmorphR::validate_stimlist(stimuli)
   verbose <- getOption("webmorph.verbose", TRUE)

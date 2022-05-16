@@ -15,3 +15,11 @@ A stimlist with only tem points
 \description{
 Make webmorph templates out of XML formatted point files.
 }
+\examples{
+\dontrun{
+  # requires python and dlib
+  xml <- system.file("demo/_images.xml", package = "webmorphR.dlib")
+  stimuli <- xml_to_tem(xml)
+  stimuli |> draw_tem() |> plot(nrow = 2)
+}
+}

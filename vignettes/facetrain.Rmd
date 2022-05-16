@@ -1,10 +1,8 @@
 ---
 title: "facetrain"
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{facetrain}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+resource_files:
+  - vignettes/images/facetrain/*
 ---
 
 ```{r, include = FALSE}
@@ -12,8 +10,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   message = FALSE,
-  error = TRUE
+  error = TRUE,
+  out.width = "100%",
+  fig.path = "images/facetrain/"
 )
+
+run_models <- FALSE
 ```
 
 ```{r setup}
@@ -53,7 +55,7 @@ stim_2pt[1:5] |>
 
 Use `tem_to_xml()` to save the images to a directory, write the template points to an xml file, and run a python script that finds the "bounding box" of each face. This function returns the location of the xml file, which you'll need for the next step.
 
-```{r, eval = FALSE}
+```{r, eval = run_models}
 xml <- tem_to_xml(stim_2pt, dir = "images")
 ```
 
@@ -82,7 +84,7 @@ get_bounds(xml, crop = FALSE, subset = 1:10) |>
 
 Now run `facetrain()` using the XML file. This will create a shape predictor output file that you can use in auto-delineation.
 
-```{r}
+```{r eval = run_models}
 facetrain(xml, "eyes.dat")
 ```
 
@@ -97,7 +99,7 @@ stim_eyes <- stim |>
   subset(1:5) |>
   crop(.5, .7) |>
   auto_delin(replace = TRUE,
-             dlib_path = "eyes.dat")
+             model_path = "eyes.dat")
 
 # plot to check
 stim_eyes[1:5] |> 
@@ -114,7 +116,7 @@ smiling <- demo_stim("smiling", 1:5) |>
 smiling_eyes <- smiling |>
   crop(0.5, 0.7) |>
   auto_delin(replace = TRUE,
-             dlib_path = eyes)
+             model_path = eyes)
 
 # plot to check
 smiling_eyes |> 
@@ -131,7 +133,7 @@ smiling |>
   crop(width = seq(1, .5, length.out = 5),
        height = seq(1, .7, length.out = 5)) |>
   auto_delin(replace = TRUE,
-             dlib_path = eyes) |>
+             model_path = eyes) |>
   draw_tem(pt.size = 20) |> 
   plot()
 ```
@@ -147,7 +149,7 @@ smiling |>
        x_off = seq(0, .2, .05),
        y_off = seq(0, .2, .05)) |>
   auto_delin(replace = TRUE,
-             dlib_path = eyes) |>
+             model_path = eyes) |>
   draw_tem(pt.size = 20) |> 
   plot()
 ```
@@ -161,7 +163,7 @@ smiling |>
   crop(.6, .6) |>
   rotate(degrees = seq(-45, 45, length.out = 5)) |>
   auto_delin(replace = TRUE,
-             dlib_path = eyes) |>
+             model_path = eyes) |>
   draw_tem(pt.size = 20) |> 
   plot()
 ```
@@ -173,7 +175,7 @@ Clearly, there's something lacking in our training. Maybe we don't have enough i
 
 Make more images by permuting the original images. At each step, add the previous stimulus lists together to make a larger permuted set. Start with rotation, since that takes the longest.
 
-```{r, eval = FALSE}
+```{r, eval = run_models}
 rotations <- stim_2pt |>
   rotate(seq(-20, 20, 1), patch = TRUE)
 
@@ -196,7 +198,7 @@ locations <- c(stim_2pt, rotations, crops, sizes) |>
 
 Combine all of the image sets and give each a unique name.
 
-```{r, eval = FALSE}
+```{r, eval = run_models}
 all_stim <- c(
   stim_2pt, 
   rotations, 
@@ -207,7 +209,7 @@ all_stim <- c(
   setnames(paste0("face_", 1:1632))
 ```
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = !run_models}
 all_stim <- read_stim("allimages")
 ```
 
@@ -230,17 +232,20 @@ samp |>
 
 This will take quite a while now. It takes my computer about 1 minute to detect 100 face locations for the XML file. Luckily, this only needs to be done once (make sure you comment this code out after you've run it so you don't accidentally run it again). Time for coffee!
 
-```{r, eval = FALSE}
+```{r, eval = run_models}
 all_xml <- tem_to_xml(all_stim, dir = "allimages")
 ```
+
+```{r, echo = FALSE, eval = !run_models}
+all_xml <- "allimages/_images.xml"
+```
+
 
 ### Default parameters
 
 Train a model with default parameters. We'll use tictoc to see how long each training takes.
 
-```{r}
-all_xml <- "allimages/_images.xml"
-
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, "eyes-default.dat")
 train_timing <- tictoc::toc()
@@ -253,22 +258,22 @@ Test your shape predictor file on that same random subset of images. We'll be te
 ```{r}
 oos <- demo_stim("zoom")
 
-viz_model <- function(dlib_path) {
+viz_model <- function(model_path) {
   in_set <- samp |>
     auto_delin(replace = TRUE,
-               dlib_path = dlib_path) |> 
+               model_path = model_path) |> 
     draw_tem(pt.size = 20) |> 
     plot(nrow = 2)
   
   sm_set <- smiling |>
     auto_delin(replace = TRUE,
-               dlib_path = dlib_path) |>
+               model_path = model_path) |>
     draw_tem(pt.size = 20) |> 
     plot()
   
   out_set <- oos |>
     auto_delin(replace = TRUE,
-               dlib_path = dlib_path) |>
+               model_path = model_path) |>
     draw_tem(pt.size = 20) |> 
     plot()
   
@@ -289,11 +294,11 @@ Not terrible, but not perfect. Let's try changing some of the defaults.
 
 See `?facetrain` for explanations of all the arguments, or the original source by Adrian Rosebrock at PyImageSearch: [Training a custom dlib shape predictor](https://www.pyimagesearch.com/2019/12/16/training-a-custom-dlib-shape-predictor/). 
 
-arg | default | explanation | increase effect
-:---|--------:|:------------|:---------------
-tree_depth | 5 | the depth of each regression tree; typically 2:8 | more accurate models; slower predictions
-nu | 0.5 | regularization parameter; must be 0:1 | less generalisability
-cascade_depth | 15 | the number of cascades used to train the shape predictor; typically 6:18 | 
+arg | default | explanation 
+:---|--------:|:------------
+tree_depth | 5 | the depth of each regression tree; typically 2:8
+nu | 0.5 | regularization parameter; must be 0:1
+cascade_depth | 15 | the number of cascades used to train the shape predictor; typically 6:18 
 feature_pool_size | 400 | number of pixels used to generate features for the random trees at each cascade
 num_test_splits | 50 | selects best features at each cascade when training
 oversampling_amount | 5 | controls the number of random deformations per image (i.e., data augmentation) when training the shape predictor; typically 0:50
@@ -314,7 +319,16 @@ models <- list(
   oa = "eyes-oa_10.dat",
   jitter = "eyes-jitter_.2.dat"
 )
+```
 
+```{r, echo = FALSE, eval = !run_models}
+# read timings from saved files if not running models
+train_timings <- readRDS("train_timings.rds")
+pred_timings <- readRDS("pred_timings.rds")
+```
+
+
+```{r, eval = run_models}
 train_timings <- list(
   default = train_timing 
 )
@@ -329,7 +343,7 @@ pred_timings <- list(
 
 Let's try increasing `tree_depth` from 5 to 7. Larger values will make the model more accurate, but slower when making predictions.
 
-```{r}
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, models$td,
           tree_depth = 7)
@@ -348,7 +362,7 @@ pred_timings$td <- tictoc::toc()
 
 Decrease nu from 0.5 to to 0.1. Decreasing this number helps models to generalise, but requires a lot of training images. 
 
-```{r}
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, models$nu,
           nu = 0.1)
@@ -365,7 +379,7 @@ pred_timings$nu <- tictoc::toc()
 
 Increase `cascade_depth` from 15 to 18. This will make the model more accurate, but the file size will be larger.
 
-```{r}
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, models$cd,
           cascade_depth = 18)
@@ -383,7 +397,7 @@ pred_timings$cd <- tictoc::toc()
 
 Increase `feature_pool_size` from 400 to 600. This will make the model more accurate, but slower at making predictions.
 
-```{r}
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, models$fps,
           feature_pool_size = 600)
@@ -400,7 +414,7 @@ pred_timings$fps <- tictoc::toc()
 
 Increase `test_splits` from 50 to 75. This will make the model more accurate, but training will take longer. 
 
-```{r}
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, models$nts,
           num_test_splits = 75)
@@ -417,7 +431,7 @@ pred_timings$nts <- tictoc::toc()
 
 Increase the number of random deformations from 5 to 10. This can increase generalisation, but will also increase training time.
 
-```{r}
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, models$oa,
           oversampling_amount = 10)
@@ -434,7 +448,7 @@ pred_timings$oa <- tictoc::toc()
 
 Double `jitter` from 0.1 to 0.2. This increases the amount of deformation applied when oversampling. 
 
-```{r}
+```{r, eval = run_models}
 tictoc::tic()
 facetrain(all_xml, models$jitter,
           jitter = 0.2)
@@ -450,14 +464,13 @@ pred_timings$jitter <- tictoc::toc()
 ## Model size and speed
 
 Model size is in MB. Speed in minutes.
-
-```{r, echo = FALSE}
-
+```{r, echo = FALSE, eval = run_models}
 saveRDS(train_timings, "train_timings.rds")
 saveRDS(pred_timings, "pred_timings.rds")
-train_timings <- readRDS("train_timings.rds")
-pred_timings <- readRDS("pred_timings.rds")
+```
 
+
+```{r, echo = FALSE}
 sizes <- (sapply(models, file.size) / 1024 / 1024) |> round(1)
 train <- sapply(train_timings, `[[`, "toc") - 
          sapply(train_timings, `[[`, "tic")
