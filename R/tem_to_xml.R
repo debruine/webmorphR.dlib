@@ -27,6 +27,12 @@ tem_to_xml <- function(stimuli, dir = "images", imageset = "Image Set") {
   # write images to dir ----
   if (verbose) message("Writing images to directory")
 
+  stim_names <- names(stimuli)
+  unique_names <- unique(stim_names)
+  if (length(stim_names) > length(unique_names)) {
+    stop("Make sure none of your images has a duplicate name.")
+  }
+
   paths <- stimuli |>
     webmorphR::remove_tem() |>
     webmorphR::write_stim(dir = dir, format = "jpg", overwrite = TRUE) |>

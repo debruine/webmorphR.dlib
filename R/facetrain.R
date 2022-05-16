@@ -30,7 +30,7 @@
 #' @param output the name of the .dat file to save the model to
 #' @param tree_depth the depth of each regression tree; typically 2:8
 #' @param nu regularization parameter; must be 0:1
-#' @param cascade_depth the number of cascades used to train the shape predictor; typically 6:8
+#' @param cascade_depth the number of cascades used to train the shape predictor; typically 6:18
 #' @param feature_pool_size number of pixels used to generate features for the random trees at each cascade
 #' @param num_test_splits selects best features at each cascade when training
 #' @param oversampling_amount controls the number of random deformations per image (i.e., data augmentation) when training the shape predictor; typically 0:50

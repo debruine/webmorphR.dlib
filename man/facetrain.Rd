@@ -26,7 +26,7 @@ facetrain(
 
 \item{nu}{regularization parameter; must be 0:1}
 
-\item{cascade_depth}{the number of cascades used to train the shape predictor; typically 6:8}
+\item{cascade_depth}{the number of cascades used to train the shape predictor; typically 6:18}
 
 \item{feature_pool_size}{number of pixels used to generate features for the random trees at each cascade}
 

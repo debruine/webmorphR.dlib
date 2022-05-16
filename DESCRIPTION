@@ -1,6 +1,6 @@
 Package: webmorphR.dlib
 Title: Face Detection for webmorphR
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(
         given = "Lisa", 
@@ -18,17 +18,13 @@ RoxygenNote: 7.2.0
 Depends: 
     R (>= 4.2.0)
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
-Config/testthat/edition: 3
-Config/reticulate:
-  list(
-    packages = list(
-      list(package = "face_recognition")
-    )
-  )
 Imports: 
     progress,
     reticulate,
-    webmorphR (>= 0.0.1.9008)
+    webmorphR (>= 0.0.2)
 Remotes: 
     debruine/webmorphR
+VignetteBuilder: knitr

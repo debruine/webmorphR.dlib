@@ -1,5 +1,7 @@
 # https://www.pyimagesearch.com/2019/12/16/training-a-custom-dlib-shape-predictor/
 
+# http://dlib.net/python/index.html#dlib_pybind11.shape_predictor
+
 # import the necessary packages
 import multiprocessing
 import argparse
