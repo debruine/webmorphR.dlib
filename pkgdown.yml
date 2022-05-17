@@ -1,0 +1,10 @@
+pandoc: 2.17.1.1
+pkgdown: 2.0.3
+pkgdown_sha: ~
+articles:
+  facetrain: facetrain.html
+last_built: 2022-05-17T09:27Z
+urls:
+  reference: https://debruine.github.io/webmorphR.dlib/reference
+  article: https://debruine.github.io/webmorphR.dlib/articles
+
