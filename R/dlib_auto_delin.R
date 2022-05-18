@@ -71,7 +71,7 @@ dlib_auto_delin <- function(stimuli,
   tempdir <- tempfile()
   paths <- stimuli |>
     webmorphR::remove_tem() |>
-    webmorphR::write_stim(tempdir, format = "jpg", ask = FALSE, overwrite = TRUE) |>
+    webmorphR::write_stim(tempdir, format = "jpg", overwrite = TRUE) |>
     unlist()
 
   if (verbose) {
