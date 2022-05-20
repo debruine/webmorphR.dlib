@@ -70,7 +70,7 @@ This text is from Adrian Rosebrock's explanation:
   newmodel <- facetrain(xml)
 
   # check model on new images
-  newdelin <- demo_stim("zoom") |>
+  newdelin <- webmorphR.stim::load_stim_zoom() |>
     auto_delin(replace = TRUE, dat_file = newmodel)
 
   newdelin |> draw_tem() |> plot(nrow = 6)

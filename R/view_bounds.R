@@ -50,7 +50,7 @@ get_bounds <- function(xml, crop = FALSE, subset = NULL) {
   pt_array <- points |> unlist() |>
     array(dim = c(nrow(bounds), 4, 2),
           dimnames = list(
-            basename(files) |> gsub("\\.jpg", "", x = _),
+            gsub(pattern = "\\.jpg", replacement = "", x = basename(files)),
             c("tl", "tr", "bl", "br"),
             c("x", "y")
           ))

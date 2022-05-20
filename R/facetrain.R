@@ -49,7 +49,7 @@
 #'   newmodel <- facetrain(xml)
 #'
 #'   # check model on new images
-#'   newdelin <- demo_stim("zoom") |>
+#'   newdelin <- webmorphR.stim::load_stim_zoom() |>
 #'     auto_delin(replace = TRUE, dat_file = newmodel)
 #'
 #'   newdelin |> draw_tem() |> plot(nrow = 6)
@@ -81,7 +81,7 @@ facetrain <- function(xml,
 
   # check number of images in training set
   # R crashes if it's less than 8
-  n_images <- readLines(xml) |> grepl("</image>", x = _) |> sum()
+  n_images <- readLines(xml) |> grepl(pattern = "</image>") |> sum()
   if (n_images < 8) stop("The algorithm crashes if you train with fewer than 8 images.")
 
   # load python code

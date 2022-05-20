@@ -1,8 +1,9 @@
 library(webmorphR)
+library(webmorphR.stim)
 
 test_that("get_bounds", {
   dir <- tempfile()
-  stimuli <- demo_stim("lisa")
+  stimuli <- load_stim_lisa()
   xml <- tem_to_xml(stimuli, dir)
   bounds <- get_bounds(xml)
   cropped <- get_bounds(xml, crop = TRUE)

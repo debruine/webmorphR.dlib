@@ -21,6 +21,7 @@ run_models <- FALSE
 ```{r setup}
 library(webmorphR)
 library(webmorphR.dlib)
+library(webmorphR.stim)
 wm_opts(plot.maxwidth = 850)
 
 library(tictoc) # for timing things
@@ -34,7 +35,7 @@ library(tictoc) # for timing things
 First, load your faces and templates. The London demo set are really big images (1350x1350 pixels) so I'm going to resize them to make some of the later functions run faster.
 
 ```{r}
-stim <- demo_stim("london") |>
+stim <- load_stim_london() |>
   resize(0.5)
 ```
 
@@ -110,7 +111,7 @@ stim_eyes[1:5] |>
 Not perfect, but we didn't have very many images and only used the default settings. It probably will be worse on out-of-set images:
 
 ```{r out-of-set}
-smiling <- demo_stim("smiling", 1:5) |>
+smiling <- load_stim_smiling(1:5) |>
   resize(0.5)
 
 smiling_eyes <- smiling |>
@@ -256,7 +257,7 @@ train_timing <- tictoc::toc()
 Test your shape predictor file on that same random subset of images. We'll be testing a fair, bit, so write a function to make it easier. We'll add some very out-of-set examples to see how well our models generalise.
 
 ```{r}
-oos <- demo_stim("zoom")
+oos <- load_stim_zoom()
 
 viz_model <- function(model_path) {
   in_set <- samp |>

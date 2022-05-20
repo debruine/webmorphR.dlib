@@ -1,7 +1,7 @@
 test_that("facetrain", {
   skip_on_cran() # requires a python installation with dlib
 
-  stimuli <- demo_stim("composite") |>
+  stimuli <- webmorphR.stim::load_stim_composite() |>
     webmorphR::subset_tem(webmorphR::features("face"))
   #stimuli[1] |> draw_tem()
 
@@ -26,7 +26,7 @@ test_that("facetrain", {
   output <- tempfile(fileext = ".dat")
   newmodel <- facetrain(xml, output)
 
-  teststim <- demo_stim("lisa") |>
+  teststim <- webmorphR.stim::load_stim_lisa() |>
     dlib_auto_delin(replace = TRUE, model_path = newmodel)
 
   expect_equal(teststim[[1]]$points |> dim(),
