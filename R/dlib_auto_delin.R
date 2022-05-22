@@ -1,3 +1,45 @@
+#' Auto-Delineation
+#'
+#' Automatically delineate faces using dlib in python or Face++ (an external service). Wrapper function for [webmorphR::auto_delin()] and [webmorphR.dlib::dlib_auto_delin()].
+#'
+#' @param stimuli list of class stimlist
+#' @param model Which shape predictor model to use (dlib7, dlib70, fpp106, fpp83)
+#' @param replace if FALSE, only gets templates for images with no template
+#' @param face which face to delineate in each image if there is more than 1 (only for Face++)
+#' @param model_path path to a custom dlib .dat landmark file to use (model is ignored if set)
+#'
+#' @return stimlist with templates
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # requires an API key in .Renviron
+#'   auto_fpp106 <- demo_stim() |>
+#'     auto_delin(model = "fpp106", replace = TRUE)
+#'
+#'   # requires debruine/webmorphR.dlib
+#'   auto_dlib7 <- demo_stim() |>
+#'     auto_delin(replace = TRUE)
+#'
+#'   auto_dlib70 <- demo_stim() |>
+#'     auto_delin(model = "dlib70", replace = TRUE)
+#' }
+auto_delin <- function(stimuli,
+                       model = c("dlib7", "dlib70", "fpp106", "fpp83"),
+                       replace = FALSE,
+                       face = 1,
+                       model_path = NULL) {
+  stimuli <- webmorphR::validate_stimlist(stimuli)
+  model <- match.arg(model)
+
+  if (model %in% c("fpp106", "fpp83")) {
+    webmorphR::auto_delin(stimuli, model, replace, face)
+  } else if (model %in% c("dlib7", "dlib70") ||
+             !is.null(model_path)) {
+    dlib_auto_delin(stimuli, model, replace, model_path)
+  }
+}
+
 #' dlib Auto-Delineation
 #'
 #' Automatically delineate faces using dlib shape predictor models.
