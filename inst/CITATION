@@ -1,0 +1,20 @@
+citHeader("To cite webmorphR.dlib in publications use:")
+
+year <- sub("-.*", "", meta$Date)
+title <- paste(meta$Package, ": ", meta$Title)
+note <- sprintf("R package version %s", meta$Version)
+doi <- "10.5281/zenodo.6570965"
+textVersion <- sprintf("Lisa DeBruine, (%s). %s, %s.",
+                       year, title, note)
+
+citEntry(
+  entry    = "Manual",
+  title    = title,
+  author   = "Lisa M. DeBruine",
+  #doi      = doi,
+  #publisher = "Zenodo",
+  year     = year,
+  note     = note,
+  url      = "https://debruine.github.io/webmorphR.dlib/",
+  textVersion = textVersion
+)
