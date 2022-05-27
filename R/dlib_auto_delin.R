@@ -29,7 +29,7 @@ auto_delin <- function(stimuli,
                        replace = FALSE,
                        face = 1,
                        model_path = NULL) {
-  stimuli <- webmorphR::validate_stimlist(stimuli)
+  stimuli <- webmorphR::as_stimlist(stimuli)
   model <- match.arg(model)
 
   if (model %in% c("fpp106", "fpp83")) {
@@ -68,7 +68,7 @@ dlib_auto_delin <- function(stimuli,
                             model = c("dlib7", "dlib70"),
                             replace = FALSE,
                             model_path = NULL) {
-  stimuli <- webmorphR::validate_stimlist(stimuli)
+  stimuli <- webmorphR::as_stimlist(stimuli)
   model <- match.arg(model)
   verbose <- getOption("webmorph.verbose", TRUE)
 

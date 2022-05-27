@@ -1,5 +1,5 @@
 test_that("dlib_auto_delin", {
-  stimuli <- demo_stim("test", "f")
+  stimuli <- demo_stim("f")
   expect_error(dlib_auto_delin())
   # all images have templates
   expect_warning(x <- dlib_auto_delin(stimuli))
@@ -11,7 +11,7 @@ test_that("dlib_auto_delin", {
 test_that("python", {
   skip_on_cran()
 
-  stimuli <- demo_stim("test", "f_")
+  stimuli <- demo_stim("f_")
 
   s7 <- dlib_auto_delin(stimuli, "dlib7", TRUE)
   expect_equal(s7[[1]]$points |> dim(), c(2, 7))

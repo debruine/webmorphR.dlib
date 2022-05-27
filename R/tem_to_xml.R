@@ -15,7 +15,7 @@
 #' # read the first 10 lines of the xml file
 #' readLines(xml, n = 10)
 tem_to_xml <- function(stimuli, dir = "images", imageset = "Image Set") {
-  stimuli <- webmorphR::validate_stimlist(stimuli)
+  stimuli <- webmorphR::as_stimlist(stimuli)
   verbose <- getOption("webmorph.verbose", TRUE)
 
   # write images to dir ----
